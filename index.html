@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>My first three.js app</title>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import * as THREE from "https://unpkg.com/three/build/three.module.js"; // Our Javascript will go here.
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+      const geometry = new THREE.BoxGeometry(1, 2, 1);
+      const material = new THREE.MeshBasicMaterial({ color: 0x0066ff });
+      const shiny = new THREE.MeshPhongMaterial({color: 0x0066ff});
+      const cube = new THREE.Mesh(geometry, shiny);
+      const light = new THREE.DirectionalLight(0xDDDDDD, 1);
+
+      light.position.set(-1, 2, 4);
+      scene.add(light);
+      scene.add(cube);
+      camera.position.z = 3;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        // camera.rotation.x += 0.01;
+        renderer.render(scene, camera);
+      }
+      animate();
+    </script>
+    <div class="slidecontainer">
+      <input
+        type="range"
+        min="1"
+        max="100"
+        value="50"
+        class="slider"
+        id="myRange"
+      />
+    </div>
+  
